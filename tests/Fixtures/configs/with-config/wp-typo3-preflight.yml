@@ -1,0 +1,11 @@
+suites:
+  static:
+    enabled: true
+  runtime:
+    enabled: false
+
+urls:
+  - /home
+
+baseline:
+  path: custom/path

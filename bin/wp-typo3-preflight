@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+// Locate Composer autoloader.
+$autoloadFiles = [
+    $GLOBALS['_composer_autoload_path'] ?? null,
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+];
+
+$autoloader = null;
+foreach ($autoloadFiles as $file) {
+    if (is_string($file) && file_exists($file)) {
+        $autoloader = require $file;
+        break;
+    }
+}
+
+if ($autoloader === null) {
+    fwrite(STDERR, "Could not find Composer autoloader. Run 'composer install' first.\n");
+    exit(2);
+}
+
+use Symfony\Component\Console\Application;
+use WEBprofil\Typo3Preflight\CheckCommand;
+use WEBprofil\Typo3Preflight\BaselineCreateCommand;
+
+$application = new Application('wp-typo3-preflight', '1.0.0');
+$application->add(new CheckCommand());
+$application->add(new BaselineCreateCommand());
+$application->run();

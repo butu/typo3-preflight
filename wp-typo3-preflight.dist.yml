@@ -1,0 +1,25 @@
+# wp-typo3-preflight.dist.yml — dist reference
+# Copy to wp-typo3-preflight.yml in your project root and customize.
+#
+# Preflight runs without a config file using sensible defaults:
+# static + runtime suites active, URL-checks skipped.
+
+# Suite toggles — set enabled: false to opt out of an entire suite.
+suites:
+  static:
+    enabled: true
+  runtime:
+    enabled: true
+
+# Base URL for frontend smoke checks.
+# Falls back to the DDEV_PRIMARY_URL environment variable when empty.
+# base_url: 'https://myproject.ddev.site'
+
+# Additional frontend URLs to smoke (appended to base_url).
+# urls:
+#   - /
+#   - /contact
+
+# Baseline storage — relative to project root.
+# baseline:
+#   path: build/preflight

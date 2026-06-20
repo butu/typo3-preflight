@@ -1,0 +1,14 @@
+[
+    {
+        "fingerprint": "abc123def456",
+        "check": "composer",
+        "message": "composer validate failed",
+        "reason": "known dependency issue"
+    },
+    {
+        "fingerprint": "789ghi012jkl",
+        "check": "typo3-boot",
+        "message": "TYPO3 fails to boot in CI",
+        "reason": ""
+    }
+]
