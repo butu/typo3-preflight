@@ -1,0 +1,14 @@
+{
+    "name": "test/invalid-services",
+    "type": "typo3-cms-extension",
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "invalid_services"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Test\\InvalidServices\\": "Classes/"
+        }
+    }
+}

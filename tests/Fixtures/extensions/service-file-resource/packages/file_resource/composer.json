@@ -1,0 +1,14 @@
+{
+    "name": "test/file-resource",
+    "type": "typo3-cms-extension",
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "file_resource"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Test\\FileResource\\": "Classes/"
+        }
+    }
+}

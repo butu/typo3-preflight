@@ -1,0 +1,14 @@
+{
+    "name": "test/bad-type",
+    "type": "library",
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "bad_type"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Test\\BadType\\": "Classes/"
+        }
+    }
+}

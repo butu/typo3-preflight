@@ -16,6 +16,7 @@ use WEBprofil\Typo3Preflight\Check\ContentBlocks\ContentBlocksLintCheck;
 use WEBprofil\Typo3Preflight\Check\ContentBlocks\ContentBlocksYamlCheck;
 use WEBprofil\Typo3Preflight\Check\Database\DatabaseSchemaCheck;
 use WEBprofil\Typo3Preflight\Check\Database\ReferenceIndexCheck;
+use WEBprofil\Typo3Preflight\Check\Extensions\ExtensionIntegrityCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\FrontendSmokeCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\LogCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\Typo3BootCheck;
@@ -43,7 +44,7 @@ final class CheckCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('Run preflight integration checks');
-        $this->addOption('suite', 's', InputOption::VALUE_REQUIRED, 'Run only the given suite (static, site, content_blocks, wiring, database, runtime)');
+        $this->addOption('suite', 's', InputOption::VALUE_REQUIRED, 'Run only the given suite (static, extensions, site, content_blocks, wiring, database, runtime)');
         $this->addOption('fail-fast', 'f', InputOption::VALUE_NONE, 'Stop after the first failure');
         $this->addOption('format', null, InputOption::VALUE_REQUIRED, 'Output format: text or json', 'text');
     }
@@ -90,6 +91,8 @@ final class CheckCommand extends Command
             new PhpLintCheck($runner),
             new ArchitectureSqlCheck(),
             new SecretScannerCheck(),
+            // extensions
+            new ExtensionIntegrityCheck(),
             // site
             new SiteConfigCheck(),
             // content_blocks

@@ -1,0 +1,10 @@
+{
+    "name": "test/no-key",
+    "type": "typo3-cms-extension",
+    "extra": {},
+    "autoload": {
+        "psr-4": {
+            "Test\\NoKey\\": "Classes/"
+        }
+    }
+}

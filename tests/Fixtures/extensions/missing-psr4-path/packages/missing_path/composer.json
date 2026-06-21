@@ -1,0 +1,14 @@
+{
+    "name": "test/missing-path",
+    "type": "typo3-cms-extension",
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "missing_path"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Test\\MissingPath\\": "NonExistent/"
+        }
+    }
+}

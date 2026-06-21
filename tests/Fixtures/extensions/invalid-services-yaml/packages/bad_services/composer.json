@@ -1,0 +1,14 @@
+{
+    "name": "test/bad-services",
+    "type": "typo3-cms-extension",
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "bad_services"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Test\\BadServices\\": "Classes/"
+        }
+    }
+}

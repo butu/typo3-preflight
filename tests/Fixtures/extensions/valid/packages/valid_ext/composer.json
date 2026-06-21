@@ -1,0 +1,14 @@
+{
+    "name": "test/valid-ext",
+    "type": "typo3-cms-extension",
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "valid_ext"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Test\\ValidExt\\": "Classes/"
+        }
+    }
+}

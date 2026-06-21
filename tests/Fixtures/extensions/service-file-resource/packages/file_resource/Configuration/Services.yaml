@@ -1,0 +1,3 @@
+services:
+  Test\FileResource\Service\ExampleService:
+    resource: '../Classes/Service/ExampleService.php'

@@ -37,6 +37,7 @@ final class ManifestLoader
         return [
             'suites' => [
                 'static' => ['enabled' => true],
+                'extensions' => ['enabled' => true],
                 'site' => ['enabled' => true],
                 'content_blocks' => ['enabled' => true],
                 'wiring' => ['enabled' => true],

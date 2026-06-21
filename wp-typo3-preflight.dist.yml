@@ -8,6 +8,8 @@
 suites:
   static:
     enabled: true
+  extensions:
+    enabled: true
   site:
     enabled: true
   content_blocks:

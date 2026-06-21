@@ -1,0 +1,9 @@
+{
+    "name": "test/some-library",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Test\\SomeLibrary\\": "src/"
+        }
+    }
+}

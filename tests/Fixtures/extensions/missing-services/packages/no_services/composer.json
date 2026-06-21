@@ -1,0 +1,14 @@
+{
+    "name": "test/no-services",
+    "type": "typo3-cms-extension",
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "no_services"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Test\\NoServices\\": "Classes/"
+        }
+    }
+}
