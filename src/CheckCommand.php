@@ -124,6 +124,12 @@ final class CheckCommand extends Command
             fn(CheckInterface $c): bool => $context->isSuiteEnabled($c->suite()),
         ));
 
+        // 4b. Filter by disabled individual checks in config
+        $checks = array_values(array_filter(
+            $checks,
+            fn(CheckInterface $c): bool => $context->isCheckEnabled($c->name()),
+        ));
+
         if ($checks === []) {
             $output->writeln('<info>No checks to run (all suites disabled or no matching suite).</info>');
             return 0;

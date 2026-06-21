@@ -21,6 +21,11 @@ suites:
   runtime:
     enabled: true
 
+# Optional per-check toggles. Check names match the output's "check" field.
+# checks:
+#   reference-index:
+#     enabled: false
+
 # Base URL for frontend smoke checks.
 # Falls back to the DDEV_PRIMARY_URL environment variable when empty.
 # base_url: 'https://myproject.ddev.site'

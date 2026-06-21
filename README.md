@@ -86,6 +86,14 @@ urls:
 
 `base_url` defaults to `DDEV_PRIMARY_URL` inside DDEV. If no URLs are configured, frontend smoke checks are skipped.
 
+Individual checks can be disabled by their output check name:
+
+```yaml
+checks:
+  reference-index:
+    enabled: false
+```
+
 ## Suites
 
 | Suite | Purpose |

@@ -56,6 +56,12 @@ final class ProjectContext
         return $this->config['suites'][$suite]['enabled'] ?? true;
     }
 
+    /** Whether a single check is enabled in config (default: true). */
+    public function isCheckEnabled(string $check): bool
+    {
+        return $this->config['checks'][$check]['enabled'] ?? true;
+    }
+
     /** Whether the command is running inside a DDEV web container. */
     public function isDdevEnvironment(): bool
     {
