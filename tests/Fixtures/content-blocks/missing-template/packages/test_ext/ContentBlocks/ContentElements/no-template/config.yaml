@@ -1,0 +1,5 @@
+name: test-ext/no-template
+typeName: NoTemplateElement
+fields:
+  - identifier: header
+    type: Text

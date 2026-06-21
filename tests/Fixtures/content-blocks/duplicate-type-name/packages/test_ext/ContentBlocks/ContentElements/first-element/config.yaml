@@ -1,0 +1,5 @@
+name: test-ext/first
+typeName: DuplicateType
+fields:
+  - identifier: header
+    type: Text

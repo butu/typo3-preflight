@@ -1,0 +1,10 @@
+name: test-ext/dup-element
+typeName: DupElement
+table: tx_testext_domain_model_dupelement
+basics:
+  - Vendor/DupBasic
+fields:
+  - identifier: title
+    type: Text
+  - identifier: description
+    type: Textarea

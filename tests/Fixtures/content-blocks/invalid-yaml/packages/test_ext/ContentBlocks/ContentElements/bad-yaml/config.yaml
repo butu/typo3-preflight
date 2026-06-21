@@ -1,0 +1,6 @@
+name: test-ext/bad-yaml
+typeName: BadYaml
+fields:
+  - identifier: header
+    type: Text
+  - invalid yaml here: [oops

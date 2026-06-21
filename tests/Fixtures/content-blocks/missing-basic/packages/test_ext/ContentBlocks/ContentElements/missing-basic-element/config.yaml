@@ -1,0 +1,9 @@
+name: test-ext/missing-basic
+typeName: MissingBasicElement
+basics:
+  - Vendor/NonExistentBasic
+fields:
+  - identifier: header
+    type: Text
+  - identifier: Vendor/AnotherMissing
+    type: Basic

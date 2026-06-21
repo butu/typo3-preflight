@@ -1,0 +1,5 @@
+name: test-ext/second
+typeName: DuplicateType
+fields:
+  - identifier: bodytext
+    type: Text

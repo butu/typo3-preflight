@@ -1,0 +1,4 @@
+identifier: Vendor/DupBasic
+fields:
+  - identifier: basic_bodytext
+    type: Textarea

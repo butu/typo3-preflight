@@ -1,0 +1,3 @@
+fields:
+  - identifier: header
+    type: Text

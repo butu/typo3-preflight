@@ -1,0 +1,12 @@
+name: test-ext/valid-element
+typeName: ValidElement
+basics:
+  - Vendor/MyBasic
+  - TYPO3/Appearance
+fields:
+  - identifier: header
+    type: Text
+  - identifier: Vendor/MyBasic
+    type: Basic
+  - identifier: TYPO3/Header
+    type: Basic

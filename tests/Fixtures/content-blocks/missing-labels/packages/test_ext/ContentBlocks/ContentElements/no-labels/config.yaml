@@ -1,0 +1,5 @@
+name: test-ext/no-labels
+typeName: NoLabelsElement
+fields:
+  - identifier: header
+    type: Text

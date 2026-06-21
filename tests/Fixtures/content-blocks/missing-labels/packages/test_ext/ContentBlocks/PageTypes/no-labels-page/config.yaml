@@ -1,0 +1,5 @@
+name: test-ext/no-labels-page
+typeName: NoLabelsPageType
+fields:
+  - identifier: header
+    type: Text

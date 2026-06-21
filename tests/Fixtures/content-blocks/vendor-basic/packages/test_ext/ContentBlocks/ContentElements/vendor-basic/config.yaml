@@ -1,0 +1,5 @@
+name: test-ext/vendor-basic
+typeName: VendorBasic
+fields:
+  - identifier: vendor/basic
+    type: Basic

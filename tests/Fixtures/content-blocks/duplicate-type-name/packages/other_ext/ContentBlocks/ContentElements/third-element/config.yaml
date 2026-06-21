@@ -1,0 +1,5 @@
+name: other-ext/third
+typeName: DuplicateType
+fields:
+  - identifier: other
+    type: Text

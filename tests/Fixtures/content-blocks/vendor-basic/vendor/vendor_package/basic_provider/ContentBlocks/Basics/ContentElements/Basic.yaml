@@ -1,0 +1,4 @@
+identifier: vendor/basic
+fields:
+  - identifier: vendor_field
+    type: Text
