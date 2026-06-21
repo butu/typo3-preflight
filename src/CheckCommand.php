@@ -12,10 +12,19 @@ use WEBprofil\Typo3Preflight\Baseline\BaselineComparator;
 use WEBprofil\Typo3Preflight\Baseline\BaselineLoader;
 use WEBprofil\Typo3Preflight\Check\CheckInterface;
 use WEBprofil\Typo3Preflight\Check\CheckResult;
+use WEBprofil\Typo3Preflight\Check\ContentBlocks\ContentBlocksLintCheck;
+use WEBprofil\Typo3Preflight\Check\ContentBlocks\ContentBlocksYamlCheck;
+use WEBprofil\Typo3Preflight\Check\Database\DatabaseSchemaCheck;
+use WEBprofil\Typo3Preflight\Check\Database\ReferenceIndexCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\FrontendSmokeCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\LogCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\Typo3BootCheck;
+use WEBprofil\Typo3Preflight\Check\Site\SiteConfigCheck;
+use WEBprofil\Typo3Preflight\Check\Static\ArchitectureSqlCheck;
 use WEBprofil\Typo3Preflight\Check\Static\ComposerCheck;
+use WEBprofil\Typo3Preflight\Check\Static\PhpLintCheck;
+use WEBprofil\Typo3Preflight\Check\Static\SecretScannerCheck;
+use WEBprofil\Typo3Preflight\Check\Wiring\ExtbaseWiringCheck;
 use WEBprofil\Typo3Preflight\Http\GuzzleHttpClient;
 use WEBprofil\Typo3Preflight\Output\JsonFormatter;
 use WEBprofil\Typo3Preflight\Output\ResultFormatter;
@@ -34,7 +43,7 @@ final class CheckCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('Run preflight integration checks');
-        $this->addOption('suite', 's', InputOption::VALUE_REQUIRED, 'Run only the given suite (static, runtime)');
+        $this->addOption('suite', 's', InputOption::VALUE_REQUIRED, 'Run only the given suite (static, site, content_blocks, wiring, database, runtime)');
         $this->addOption('fail-fast', 'f', InputOption::VALUE_NONE, 'Stop after the first failure');
         $this->addOption('format', null, InputOption::VALUE_REQUIRED, 'Output format: text or json', 'text');
     }
@@ -69,14 +78,29 @@ final class CheckCommand extends Command
             return 2;
         }
 
-        // 2. Build checks (explicit registration)
+        // 2. Build checks (explicit registration, ordered by suite)
         $runner = new SymfonyProcessRunner();
         $logCheck = new LogCheck();
         $logCheck->recordStartState($projectRoot); // record log file sizes before any check runs
 
         /** @var CheckInterface[] $checks */
         $checks = [
+            // static
             new ComposerCheck($runner),
+            new PhpLintCheck($runner),
+            new ArchitectureSqlCheck(),
+            new SecretScannerCheck(),
+            // site
+            new SiteConfigCheck(),
+            // content_blocks
+            new ContentBlocksLintCheck($runner),
+            new ContentBlocksYamlCheck(),
+            // wiring
+            new ExtbaseWiringCheck(),
+            // database
+            new DatabaseSchemaCheck($runner),
+            new ReferenceIndexCheck($runner),
+            // runtime
             new Typo3BootCheck($runner),
             new FrontendSmokeCheck(new GuzzleHttpClient()),
             $logCheck,

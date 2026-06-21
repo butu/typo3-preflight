@@ -1,0 +1,4 @@
+rootPageId: 1
+base: 'https://example.com/'
+  - broken
+    yaml: [this: is: invalid

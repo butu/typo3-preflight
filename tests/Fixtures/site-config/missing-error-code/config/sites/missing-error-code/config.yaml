@@ -1,0 +1,5 @@
+rootPageId: 1
+base: 'https://example.com/'
+errorHandling:
+  - errorHandler: Page
+    errorContentSource: 't3://page?uid=2'

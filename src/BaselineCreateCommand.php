@@ -11,10 +11,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use WEBprofil\Typo3Preflight\Baseline\Fingerprint;
 use WEBprofil\Typo3Preflight\Check\CheckInterface;
 use WEBprofil\Typo3Preflight\Check\CheckResult;
+use WEBprofil\Typo3Preflight\Check\ContentBlocks\ContentBlocksLintCheck;
+use WEBprofil\Typo3Preflight\Check\ContentBlocks\ContentBlocksYamlCheck;
+use WEBprofil\Typo3Preflight\Check\Database\DatabaseSchemaCheck;
+use WEBprofil\Typo3Preflight\Check\Database\ReferenceIndexCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\FrontendSmokeCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\LogCheck;
 use WEBprofil\Typo3Preflight\Check\Runtime\Typo3BootCheck;
+use WEBprofil\Typo3Preflight\Check\Site\SiteConfigCheck;
+use WEBprofil\Typo3Preflight\Check\Static\ArchitectureSqlCheck;
 use WEBprofil\Typo3Preflight\Check\Static\ComposerCheck;
+use WEBprofil\Typo3Preflight\Check\Static\PhpLintCheck;
+use WEBprofil\Typo3Preflight\Check\Static\SecretScannerCheck;
+use WEBprofil\Typo3Preflight\Check\Wiring\ExtbaseWiringCheck;
 use WEBprofil\Typo3Preflight\Http\GuzzleHttpClient;
 use WEBprofil\Typo3Preflight\Project\ManifestLoader;
 use WEBprofil\Typo3Preflight\Project\ProjectContext;
@@ -36,6 +45,7 @@ final class BaselineCreateCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('Create a baseline file from current check failures');
+        $this->addOption('suite', 's', InputOption::VALUE_REQUIRED, 'Create baseline only for the given suite');
         $this->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Output file path', 'build/preflight/preflight.baseline.json');
     }
 
@@ -59,10 +69,27 @@ final class BaselineCreateCommand extends Command
         /** @var CheckInterface[] $checks */
         $checks = [
             new ComposerCheck($runner),
+            new PhpLintCheck($runner),
+            new ArchitectureSqlCheck(),
+            new SecretScannerCheck(),
+            new SiteConfigCheck(),
+            new ContentBlocksLintCheck($runner),
+            new ContentBlocksYamlCheck(),
+            new ExtbaseWiringCheck(),
+            new DatabaseSchemaCheck($runner),
+            new ReferenceIndexCheck($runner),
             new Typo3BootCheck($runner),
             new FrontendSmokeCheck(new GuzzleHttpClient()),
             $logCheck,
         ];
+
+        $suiteFilter = $input->getOption('suite');
+        if ($suiteFilter !== null) {
+            $checks = array_values(array_filter(
+                $checks,
+                fn(CheckInterface $c): bool => $c->suite() === $suiteFilter,
+            ));
+        }
 
         // Filter by enabled suites
         $checks = array_values(array_filter(

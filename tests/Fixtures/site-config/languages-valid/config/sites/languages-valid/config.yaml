@@ -1,0 +1,5 @@
+rootPageId: 1
+base:
+  en: 'https://example.com/en/'
+  de: 'https://example.com/de/'
+baseVariants: []

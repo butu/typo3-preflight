@@ -37,12 +37,19 @@ final class ManifestLoader
         return [
             'suites' => [
                 'static' => ['enabled' => true],
+                'site' => ['enabled' => true],
+                'content_blocks' => ['enabled' => true],
+                'wiring' => ['enabled' => true],
+                'database' => ['enabled' => true],
                 'runtime' => ['enabled' => true],
             ],
             'base_url' => $this->detectDdevUrl(),
             'urls' => [],
             'baseline' => [
                 'path' => 'build/preflight',
+            ],
+            'secrets' => [
+                'allowlist' => [],
             ],
         ];
     }

@@ -2,11 +2,19 @@
 # Copy to wp-typo3-preflight.yml in your project root and customize.
 #
 # Preflight runs without a config file using sensible defaults:
-# static + runtime suites active, URL-checks skipped.
+# all suites active, URL-checks skipped.
 
 # Suite toggles — set enabled: false to opt out of an entire suite.
 suites:
   static:
+    enabled: true
+  site:
+    enabled: true
+  content_blocks:
+    enabled: true
+  wiring:
+    enabled: true
+  database:
     enabled: true
   runtime:
     enabled: true
@@ -23,3 +31,9 @@ suites:
 # Baseline storage — relative to project root.
 # baseline:
 #   path: build/preflight
+
+# Secret scanner allowlist — regex patterns to suppress false positives.
+# secrets:
+#   allowlist:
+#     - '/\$password\s*=\s*'\''dev'\''/'
+#     - '/test_secret/'

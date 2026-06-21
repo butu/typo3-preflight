@@ -46,7 +46,7 @@ final class ComposerCheck implements CheckInterface
         $result = $this->runner->run('composer validate --strict', $context->projectRoot);
 
         if (!$result->isSuccessful()) {
-            foreach ($this->composerValidateFailures($result->stderr) as $failure) {
+            foreach ($this->composerValidateFailures($result->stdout . "\n" . $result->stderr) as $failure) {
                 $failures[] = $failure;
             }
         }
