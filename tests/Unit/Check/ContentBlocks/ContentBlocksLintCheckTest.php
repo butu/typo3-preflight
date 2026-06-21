@@ -68,6 +68,21 @@ final class ContentBlocksLintCheckTest extends TestCase
         $this->assertSame('content-blocks-lint', $result->failures[0]->code);
     }
 
+    #[Test]
+    public function unparsed_lint_failure_keeps_stdout_context(): void
+    {
+        $runner = $this->runnerWithResult(new ProcessResult(
+            1,
+            'Number must be greater than or equal to 1',
+            '',
+        ));
+
+        $result = (new ContentBlocksLintCheck($runner))->run(new ProjectContext($this->projectRoot, []));
+
+        $this->assertSame(CheckStatus::Fail, $result->status);
+        $this->assertStringContainsString('Number must be greater', $result->failures[0]->context['output']);
+    }
+
     private function runnerWithResult(ProcessResult $result): ProcessRunner
     {
         return new class($result) implements ProcessRunner {

@@ -80,7 +80,7 @@ final class ContentBlocksLintCheck implements CheckInterface
                     self::CODE_LINT,
                     'content-blocks:lint failed',
                     '',
-                    ['stderr' => $this->trimOutput($lintResult->stderr, 500)],
+                    ['output' => $this->trimOutput($lintResult->stdout . "\n" . $lintResult->stderr, 500)],
                 ),
             ];
         }
