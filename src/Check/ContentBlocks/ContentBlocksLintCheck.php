@@ -50,45 +50,8 @@ final class ContentBlocksLintCheck implements CheckInterface
             );
         }
 
-        // Check if content-blocks:lint exists
-        $listResult = $this->runner->run($typo3Bin . ' list --format=json', $context->projectRoot, 60);
-        if (!$listResult->isSuccessful()) {
-            return new CheckResult(
-                $this->suite(),
-                $this->name(),
-                CheckStatus::Error,
-                'Failed to run typo3 list',
-            );
-        }
-
-        $commands = json_decode($listResult->stdout, true);
-        if (!is_array($commands) || !isset($commands['commands'])) {
-            return new CheckResult(
-                $this->suite(),
-                $this->name(),
-                CheckStatus::Error,
-                'Failed to parse typo3 list output',
-            );
-        }
-
-        $hasLintCommand = false;
-        foreach ($commands['commands'] as $command) {
-            if (($command['name'] ?? '') === 'content-blocks:lint') {
-                $hasLintCommand = true;
-                break;
-            }
-        }
-
-        if (!$hasLintCommand) {
-            return new CheckResult(
-                $this->suite(),
-                $this->name(),
-                CheckStatus::Skip,
-                'content-blocks:lint command not available (EXT:content_blocks not installed)',
-            );
-        }
-
-        // Run content-blocks:lint
+        // Run content-blocks:lint directly. Some TYPO3 installations expose the
+        // command in the text command list but not in `list --format=json`.
         $lintResult = $this->runner->run($typo3Bin . ' content-blocks:lint --no-interaction', $context->projectRoot, 120);
 
         if ($lintResult->isSuccessful()) {
@@ -97,6 +60,15 @@ final class ContentBlocksLintCheck implements CheckInterface
                 $this->name(),
                 CheckStatus::Pass,
                 'content-blocks:lint passed',
+            );
+        }
+
+        if ($this->isCommandMissing($lintResult->stdout . "\n" . $lintResult->stderr)) {
+            return new CheckResult(
+                $this->suite(),
+                $this->name(),
+                CheckStatus::Skip,
+                'content-blocks:lint command not available (EXT:content_blocks not installed)',
             );
         }
 
@@ -121,6 +93,14 @@ final class ContentBlocksLintCheck implements CheckInterface
             [],
             $failures,
         );
+    }
+
+    private function isCommandMissing(string $output): bool
+    {
+        return str_contains($output, 'content-blocks:lint')
+            && (str_contains($output, 'is not defined')
+                || str_contains($output, 'There are no commands defined')
+                || str_contains($output, 'CommandNotFoundException'));
     }
 
     /**
